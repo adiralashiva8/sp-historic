@@ -1,0 +1,2 @@
+recursive-include sp_historic/templates *
+include MANIFEST.in
