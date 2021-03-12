@@ -14,8 +14,6 @@ def sphistoric_parser(opts):
         print("Ignoring execution results...")
         return
 
-    path = os.path.abspath(os.path.expanduser(opts.path))
-
     # Read output.xml file
     print("Capturing execution results, This may take few minutes...")
 
@@ -39,7 +37,7 @@ def sphistoric_parser(opts):
             values = line.split(',')
             insert_into_test_table(mydb, result_id, str(values[0]), str(values[2]), str(values[3]), str(values[4]), str(values[5]), str(values[6]))
 
-    print("INFO: Writing execution results")
+    print("INFO: Writing execution results to dB")
     commit_and_close_db(mydb)
 
 # other useful methods
@@ -67,7 +65,7 @@ def insert_into_execution_table(con, ocon, name, projectname):
     cursorObj.execute("SELECT COUNT(*) FROM TB_EXECUTION;")
     execution_rows = cursorObj.fetchone()
     # update sphistoric.TB_PROJECT table
-    rootCursorObj.execute("UPDATE TB_PROJECT SET Last_Updated = now(), Total_Executions = %s, WHERE Project_Name='%s';" % (execution_rows[0], projectname))
+    rootCursorObj.execute("UPDATE TB_PROJECT SET Last_Updated = now(), Total_Executions = %s WHERE Project_Name='%s';" % (execution_rows[0], projectname))
     ocon.commit()
     return str(rows[0])
 

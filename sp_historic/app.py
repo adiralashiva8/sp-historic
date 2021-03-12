@@ -18,10 +18,6 @@ def index():
 def redirect_url():
     return render_template('redirect.html')
 
-@app.route('/updatedb')
-def updatedb_url():
-    return render_template('updatedb.html')
-
 @app.route('/home', methods=['GET'])
 def home():
     cursor = mysql.connection.cursor()
