@@ -36,13 +36,6 @@ def parse_options():
     )
 
     general.add_argument(
-        '-i', '--inputpath',
-        dest='path',
-        default=os.path.curdir,
-        help="Path of result files"
-    )
-
-    general.add_argument(
         '-o', '--output',
         dest='output',
         help="Name of excel file"

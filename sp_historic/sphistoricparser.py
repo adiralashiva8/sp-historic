@@ -16,24 +16,6 @@ def sphistoric_parser(opts):
 
     path = os.path.abspath(os.path.expanduser(opts.path))
 
-    # output.xml files
-     # files
-    output_names = []
-    if ( opts.output == "*.xlsx"):
-        for item in os.listdir(path):
-            if os.path.isfile(item) and item.endswith('.xlsx'):
-                output_names.append(item)
-    else:
-        for curr_name in opts.output.split(","):
-            curr_path = os.path.join(path, curr_name)
-            output_names.append(curr_path)
-
-    required_files = list(output_names)
-    missing_files = [filename for filename in required_files if not os.path.exists(filename)]
-    if missing_files:
-        exit("Performance results file is missing: {}".format(", ".join(missing_files)))
-
-    
     # Read output.xml file
     print("Capturing execution results, This may take few minutes...")
 
@@ -42,7 +24,7 @@ def sphistoric_parser(opts):
     rootdb = connect_to_mysql_db(opts.host, opts.username, opts.password, 'sphistoric')
 
     # insert test results info into db
-    df = pd.read_excel(output_names)
+    df = pd.read_excel(opts.output)
     table = pd.pivot_table(df, index=["table","app_version"],
      values=["browser_time", "client_response_time", "response_time", "sql_count", "sql_time"])
     
@@ -80,7 +62,7 @@ def insert_into_execution_table(con, ocon, name, projectname):
     val = (0, name)
     cursorObj.execute(sql, val)
     con.commit()
-    cursorObj.execute("SELECT Execution_Id, Execution_Total FROM TB_EXECUTION ORDER BY Execution_Id DESC LIMIT 1;")
+    cursorObj.execute("SELECT Execution_Id FROM TB_EXECUTION ORDER BY Execution_Id DESC LIMIT 1;")
     rows = cursorObj.fetchone()
     cursorObj.execute("SELECT COUNT(*) FROM TB_EXECUTION;")
     execution_rows = cursorObj.fetchone()
