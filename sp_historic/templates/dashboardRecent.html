@@ -116,39 +116,23 @@
         
                 var options = {
                     chart: {
-                        height: 350,
-                        type: "scatter",
+                    height: 350,
+                    type: 'scatter',
                         zoom: {
-                        enabled: true,
+                            enabled: true,
                             type: 'xy'
                         }
                     },
-                    dataLabels: {
-                        enabled: true,
-                    },
-                    series: [
-                        {
-                            name: "Time",
-                            data: dataArray
-                        }
-                    ],
                     xaxis: {
-                        categories: catgArray
+                        tickAmount: 10,
+                        labels: {
+                            formatter: function(val) {
+                                return parseFloat(val).toFixed(1)
+                            }
+                        }
                     },
                     yaxis: {
-                        title: {
-                            text: 'Duration (ms)'
-                        }
-                    },
-                    tooltip: {
-                        y: {
-                            formatter: function (val) {
-                                return val + " (ms)"
-                            }
-                        },
-                        x: {
-                            show: false
-                        }
+                        tickAmount: 7
                     }
                 };
         

@@ -185,17 +185,17 @@ def dashboardRecent(db):
     cursor.execute("SELECT COUNT(Test_Id) from TB_TEST;")
     test_results_data = cursor.fetchall()
 
-    if results_data[0][0] > 0 and suite_results_data[0][0] > 0 and test_results_data[0][0] > 0:
+    if results_data[0][0] > 0 and test_results_data[0][0] > 0:
 
-        cursor.execute("SELECT Execution_Id, Execution_Total from TB_EXECUTION order by Execution_Id desc LIMIT 2;")
+        cursor.execute("SELECT Execution_Id from TB_EXECUTION order by Execution_Id desc LIMIT 2;")
         exe_info = cursor.fetchall()
 
-        if len(exe_info) == 2:
+        if len(exe_info) == 1:
             pass
         else:
             exe_info = (exe_info[0], exe_info[0])
         
-        cursor.execute("SELECT * from TB_EXECUTION WHERE Execution_Id=%s;" % exe_info[0][0])
+        cursor.execute("SELECT * from TB_TEST WHERE Execution_Id=%s;" % exe_info[0][0])
         last_exe_data = cursor.fetchall()
         return render_template('dashboardRecent.html', last_exe_data=last_exe_data, exe_info=exe_info, db_name=db)    
     else:
