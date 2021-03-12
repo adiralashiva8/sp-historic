@@ -108,13 +108,15 @@
         <script>
             require(['svg', 'ApexCharts'], function(svg, ApexCharts) {
                 var dataArray = [];
-                var catgArray = [];
                 {% for item in last_exe_data %}
-                    dataArray.push({{item[1]}});
-                    catgArray.push({{item[3]}});
+                    dataArray.push('{{item[1]}}','{{item[3]}}');
                 {% endfor %}
         
                 var options = {
+                    series: [{
+                        name: 'Recent: {{exe_info[0][0]}}',
+                        data: [dataArray],
+                    }],
                     chart: {
                     height: 350,
                     type: 'scatter',
