@@ -22,6 +22,7 @@ setup(
           'console_scripts': [
               'sphistoric=sp_historic.app:main',
               'sphistoricsetup=sp_historic.setupargs:main',
+              'sphistoricparser=sp_historic.parserargs:main',
           ]
       },
 )
