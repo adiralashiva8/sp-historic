@@ -204,4 +204,4 @@ def main():
     app.config['MYSQL_USER'] = args.username
     app.config['MYSQL_PASSWORD'] = args.password
     app.config['auth_plugin'] = 'mysql_native_password'
-    app.run(host=args.apphost, port=args.appport, debug=True)
+    app.run(host=args.apphost, port=args.appport)
