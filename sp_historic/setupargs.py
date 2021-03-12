@@ -35,4 +35,4 @@ def parse_options():
 
 def main():
     args = parse_options()
-    rfhistoric_setup(args)
+    sphistoric_setup(args)
