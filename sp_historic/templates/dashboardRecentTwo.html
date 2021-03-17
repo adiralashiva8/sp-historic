@@ -78,61 +78,63 @@
                     </div>
                 </div>
                 <div class="my-3 my-md-5">
-                    <div class="col-12">
-                        {% if (error_message != "") %}
-                            <div class="alert alert-icon alert-danger" role="alert">
-                                <i class="fe fe-alert-triangle mr-2" aria-hidden="true"></i> {{error_message}}
-                            </div>
-                        {% endif %}
-                        <form class="form-inline" method="post" action="">
-                            <div class="row row-sm align-items-center mb-3">
-                                <div class="col">
-                                    <div class="input-group">
-                                        <span class="input-group-text">#</span>
-                                        <input type="text" class="form-control" placeholder="{{eid_one}}" id="eid_one" name="eid_one" onkeypress='validate(event)'>
-                                    </div>
-                                </div>
-                                <div class="col-auto">—</div>
-                                <div class="col">
-                                    <div class="input-group">
-                                        <span class="input-group-text">#</span>
-                                        <input type="text" class="form-control" placeholder="{{eid_two}}" id="eid_two" name="eid_two" onkeypress='validate(event)'>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <button class="btn btn-primary btn-block" id="submit" type="submit" disabled="disabled">Compare</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="row row-cards">
+                    <div class="container">
                         <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Client Response Time(ms)</h3>
-                                    <div class="card-options">
-                                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
-                                                class="fe fe-chevron-up"></i></a>
+                            {% if (error_message != "") %}
+                                <div class="alert alert-icon alert-danger" role="alert">
+                                    <i class="fe fe-alert-triangle mr-2" aria-hidden="true"></i> {{error_message}}
+                                </div>
+                            {% endif %}
+                            <form class="form-inline" method="post" action="">
+                                <div class="row row-sm align-items-center mb-3">
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <span class="input-group-text">#</span>
+                                            <input type="text" class="form-control" placeholder="{{eid_one}}" id="eid_one" name="eid_one" onkeypress='validate(event)'>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">—</div>
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <span class="input-group-text">#</span>
+                                            <input type="text" class="form-control" placeholder="{{eid_two}}" id="eid_two" name="eid_two" onkeypress='validate(event)'>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-primary btn-block" id="submit" type="submit" disabled="disabled">Compare</button>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <div id="responseTimeId" style="height: auto;"></div>
+                            </form>
+                        </div>
+                        <div class="row row-cards">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Client Response Time(ms)</h3>
+                                        <div class="card-options">
+                                            <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                                    class="fe fe-chevron-up"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="responseTimeId" style="height: auto;"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row row-cards">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">SQL Time(ms)</h3>
-                                    <div class="card-options">
-                                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
-                                                class="fe fe-chevron-up"></i></a>
+                        <div class="row row-cards">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">SQL Time(ms)</h3>
+                                        <div class="card-options">
+                                            <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                                    class="fe fe-chevron-up"></i></a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <div id="sqlTimeId" style="height: auto;"></div>
+                                    <div class="card-body">
+                                        <div id="sqlTimeId" style="height: auto;"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +185,7 @@
                     }
                 },
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                     // offsetX: -6,
                     style: {
                         fontSize: '10px',
@@ -251,7 +253,7 @@
                         }
                     },
                     dataLabels: {
-                        enabled: true,
+                        enabled: false,
                         // offsetX: -6,
                         style: {
                             fontSize: '10px',
