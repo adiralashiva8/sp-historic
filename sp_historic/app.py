@@ -219,10 +219,10 @@ def dashboardRecent(db):
         cursor.execute("SELECT COUNT(Table_Name) from TB_TEST WHERE Execution_Id=%s" % exe_info[0])
         tables_data = cursor.fetchall()
 
-        cursor.execute("SELECT SUM(Client_Response_Time) from TB_TEST WHERE Execution_Id=%s" % exe_info[0])
+        cursor.execute("SELECT ROUND(SUM(Client_Response_Time),2) from TB_TEST WHERE Execution_Id=%s" % exe_info[0])
         scrt_data = cursor.fetchall()
 
-        cursor.execute("SELECT SUM(Sql_Time) from TB_TEST WHERE Execution_Id=%s" % exe_info[0])
+        cursor.execute("SELECT ROUND(SUM(Sql_Time),2) from TB_TEST WHERE Execution_Id=%s" % exe_info[0])
         ssqlt_data = cursor.fetchall()
 
         return render_template('dashboardRecent.html', last_exe_data=last_exe_data, exe_info=exe_info, db_name=db,
