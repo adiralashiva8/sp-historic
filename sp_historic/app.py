@@ -255,7 +255,7 @@ def dashboardRecentTwo(db):
                 # combine both tuples
                 data = first_data + second_data
                 sorted_data = sort_tests(data)
-                print(sorted_data)
+                # print(sorted_data)
                 return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data, eid_one = eid_one, eid_two = eid_two, error_message="")
             else:
                 return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID")    
@@ -280,7 +280,7 @@ def dashboardRecentTwo(db):
                 # combine both tuples
                 data = first_data + second_data
                 sorted_data = sort_tests(data)
-                print(sorted_data)
+                # print(sorted_data)
                 return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data, eid_one = eid_one, eid_two = eid_two, error_message="")
             else:
                 return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID")
