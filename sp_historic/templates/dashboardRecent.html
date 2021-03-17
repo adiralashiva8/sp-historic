@@ -106,14 +106,30 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Client Response Time</h3>
+                                    <h3 class="card-title">Response Graph (Client, Browser, Response)</h3>
                                     <div class="card-options">
                                         <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
                                                 class="fe fe-chevron-up"></i></a>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div id="clientResponseTimeId" style="height: 16rem;"></div>
+                                    <div id="responseTimeId" style="height: 16rem;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cards">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">SQL Time</h3>
+                                    <div class="card-options">
+                                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                                class="fe fe-chevron-up"></i></a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div id="sqlId" style="height: 16rem;"></div>
                                 </div>
                             </div>
                         </div>
@@ -124,20 +140,27 @@
     </div>
     <script>
         require(['svg', 'ApexCharts'], function (svg, ApexCharts) {
-            var respdataArray = [];
-            var sqldataArray = [];
+            var browserResponseTimeArray = [];
+            var clientResponseTimeArray = [];
+            var responseTimeArray = [];
             var catArray = [];
             {% for item in last_exe_data %}
                 catArray.push('{{item[2]}}');
-                respdataArray.push({{item[4]}});
-                sqldataArray.push({{item[7]}});
+                browserResponseTimeArray.push({{item[3]}});
+                clientResponseTimeArray.push({{item[4]}});
+                responseTimeArray.push({{item[5]}});
             {% endfor %}
 
         var options = {
             series: [{
-                data: respdataArray
+                name: 'Browser Response Time',
+                data: browserResponseTimeArray
             }, {
-                data: sqldataArray
+                name: 'Client Response Time',
+                data: clientResponseTimeArray
+            },{
+                name: 'Response Time',
+                data: responseTimeArray
             }],
             chart: {
                 type: 'bar',
@@ -173,7 +196,59 @@
             },
         };
 
-        var chart = new ApexCharts(document.querySelector("#clientResponseTimeId"), options);
+        var chart = new ApexCharts(document.querySelector("#responseTimeId"), options);
+        chart.render();
+        });
+    </script>
+    <script>
+        require(['svg', 'ApexCharts'], function (svg, ApexCharts) {
+            var sqlTimeArray = [];
+            var catArray = [];
+            {% for item in last_exe_data %}
+                catArray.push('{{item[2]}}');
+                sqlTimeArray.push({{item[7]}});
+            {% endfor %}
+
+        var options = {
+            series: [{
+                name: 'SQL Time',
+                data: sqlTimeArray
+            }],
+            chart: {
+                type: 'bar',
+                height: 430
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    dataLabels: {
+                        position: 'top',
+                    },
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                offsetX: -6,
+                style: {
+                    fontSize: '12px',
+                    colors: ['#fff']
+                }
+            },
+            stroke: {
+                show: true,
+                width: 1,
+                colors: ['#fff']
+            },
+            tooltip: {
+                shared: true,
+                intersect: false
+            },
+            xaxis: {
+                categories: catArray,
+            },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#sqlId"), options);
         chart.render();
         });
     </script>
