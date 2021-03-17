@@ -230,6 +230,58 @@ def dashboardRecent(db):
     else:
         return redirect(url_for('redirect_url'))
 
+
+@app.route('/<db>/dashboardRecentTwo', methods=['GET', 'POST'])
+def dashboardRecentTwo(db):
+    cursor = mysql.connection.cursor()
+    use_db(cursor, db)
+    cursor.execute("SELECT COUNT(Execution_Id) from TB_EXECUTION;")
+    results_data = cursor.fetchall()
+    cursor.execute("SELECT COUNT(Test_Id) from TB_TEST;")
+    test_results_data = cursor.fetchall()
+
+    if results_data[0][0] > 0 and test_results_data[0][0] > 0:
+
+        if request.method == "POST":
+            eid_one = request.form['eid_one']
+            eid_two = request.form['eid_two']
+            # fetch first eid tets results
+            cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_one )
+            first_data = cursor.fetchall()
+            # fetch second eid test results
+            cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_two )
+            second_data = cursor.fetchall()
+            if first_data and second_data:
+                # combine both tuples
+                data = first_data + second_data
+                sorted_data = sort_tests(data)
+                print(sorted_data)
+                return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data, eid_one = eid_one, eid_two = eid_two, error_message="")
+            else:
+                return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID")    
+        else:
+            cursor.execute("SELECT Execution_Id from TB_EXECUTION order by Execution_Id desc LIMIT 2;")
+            exe_info = cursor.fetchall()
+            eid_one = exe_info[0]
+            eid_two = exe_info[1]
+            # fetch first eid tets results
+            cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_one )
+            first_data = cursor.fetchall()
+            # fetch second eid test results
+            cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_two )
+            second_data = cursor.fetchall()
+            if first_data and second_data:
+                # combine both tuples
+                data = first_data + second_data
+                sorted_data = sort_tests(data)
+                print(sorted_data)
+                return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data, eid_one = eid_one, eid_two = eid_two, error_message="")
+            else:
+                return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID")
+
+    else:
+        return redirect(url_for('redirect_url'))
+
 def use_db(cursor, db_name):
     cursor.execute("USE %s;" % db_name)
 

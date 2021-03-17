@@ -13,7 +13,7 @@
         <meta name="HandheldFriendly" content="True" />
         <meta name="MobileOptimized" content="320" />
         <link href="https://img.icons8.com/cotton/64/000000/time-machine.png" rel="shortcut icon" type="image/x-icon"/>
-        <title>SP Historic - Compare</title>
+        <title>SP Historic - Dashboard Recent Two</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext" />
         <script src="/assets/js/require.min.js"></script>
@@ -89,14 +89,14 @@
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text">#</span>
-                                        <input type="text" class="form-control" placeholder="EID" id="eid_one" name="eid_one" onkeypress='validate(event)'>
+                                        <input type="text" class="form-control" placeholder="{{eid_one}}" id="eid_one" name="eid_one" onkeypress='validate(event)'>
                                     </div>
                                 </div>
                                 <div class="col-auto">—</div>
                                 <div class="col">
                                     <div class="input-group">
                                         <span class="input-group-text">#</span>
-                                        <input type="text" class="form-control" placeholder="EID" id="eid_two" name="eid_two" onkeypress='validate(event)'>
+                                        <input type="text" class="form-control" placeholder="{{eid_two}}" id="eid_two" name="eid_two" onkeypress='validate(event)'>
                                     </div>
                                 </div>
                                 <div class="col">
@@ -105,78 +105,177 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="table-responsive">
-                                <table class="table card-table datatable">
-                                    <thead>
-                                        <tr>
-                                            <th rowspan="2" style="text-align:center">Table Name</th>
-                                            <th colspan="4" style="text-align:center" title="Click to view {{eid_one}} execution info"><a href="./tmetrics/{{eid_one}}" target="_blank">EID {{eid_one}}</a></th>
-                                            <th colspan="4" style="text-align:center" title="Click to view {{eid_two}} execution info"><a href="./tmetrics/{{eid_two}}" target="_blank">EID {{eid_two}}</a></th>
-                                        </tr>
-                                        <tr>
-                                            <th>Client Response Time</th>
-                                            <th>Response Time</th>
-                                            <th>Sql Count</th>
-                                            <th>Sql Time</th>
-                                            <th>Client Response Time</th>
-                                            <th>Response Time</th>
-                                            <th>Sql Count</th>
-                                            <th>Sql Time</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for item in data %}
-                                            <tr>
-                                                <td style="text-align:left;"> {{item[0]}}</td>
-                                                {% if (item[1] == fb[0][1]) %}
-                                                    <td style="text-align:center;"> {{item[2]}}</td>
-                                                    <td style="text-align:center;"> {{item[3]}}</td>
-                                                    <td style="text-align:center;"> {{item[4]}}</td>
-                                                    <td style="text-align:center;"> {{item[5]}}</td>
-                                                {% else %}
-                                                    <td style="text-align:center;"></td>
-                                                    <td style="text-align:center;"></td>
-                                                    <td style="text-align:center;"></td>
-                                                    <td style="text-align:center;"></td>
-                                                {% endif %}
-
-                                                {% if (item[1] == sb[0][1]) %}
-                                                    <td style="text-align:center;"> {{item[2]}}</td>
-                                                    <td style="text-align:center;"> {{item[3]}}</td>
-                                                    <td style="text-align:center;"> {{item[4]}}</td>
-                                                    <td style="text-align:center;"> {{item[5]}}</td>
-                                                {% elif (item[5] == sb[0][1]) %}
-                                                    <td style="text-align:center;"> {{item[6]}}</td>
-                                                    <td style="text-align:center;"> {{item[7]}}</td>
-                                                    <td style="text-align:center;"> {{item[8]}}</td>
-                                                    <td style="text-align:center;"> {{item[9]}}</td>
-                                                {% else %}
-                                                    <td style="text-align:center;"></td>
-                                                    <td style="text-align:center;"></td>
-                                                    <td style="text-align:center;"></td>
-                                                    <td style="text-align:center;"></td>
-                                                {% endif %}
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                <script>
-                                    require(["datatables", "jquery"], function (datatable, $) {
-                                        $(".datatable").DataTable({
-                                            stateSave: true,
-                                            "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                                            order: [[0, "asc"]],
-                                        });
-                                    });
-                                </script>
+                    <div class="row row-cards">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Client and Response Time(ms)</h3>
+                                    <div class="card-options">
+                                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                                class="fe fe-chevron-up"></i></a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div id="responseTimeId" style="height: auto;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cards">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">SQL Time(ms)</h3>
+                                    <div class="card-options">
+                                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                                class="fe fe-chevron-up"></i></a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div id="sqlTimeId" style="height: auto;"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            require(['svg', 'ApexCharts'], function (svg, ApexCharts) {
+                var clientResponseTimeArray1 = [];
+                var clientResponseTimeArray2 = [];
+                var catArray = [];
+                {% for item in data %}
+                    catArray.push('{{item[0]}}');
+                    {% if (item[1] == fb[0][1]) %}
+                        clientResponseTimeArray1.push({{item[2]}});
+                    {% else %}
+                        clientResponseTimeArray1.push(0);
+                    {% endif %}
+
+                    {% if (item[1] == sb[0][1]) %}
+                        clientResponseTimeArray1.push({{item[5]}});
+                    {% elif (item[4] == sb[0][1]) %}
+                        clientResponseTimeArray2.push({{item[5]}});
+                    {% else %}
+                        clientResponseTimeArray2.push(0);
+                    {% endif %}
+                {% endfor %}
+    
+            var options = {
+                series: [{
+                    name: 'EID: {{eid_one}} Client Response Time',
+                    data: clientResponseTimeArray1
+                }, {
+                    name: 'EID: {{eid_two}} Client Response Time',
+                    data: clientResponseTimeArray2
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 430
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        dataLabels: {
+                            position: 'top',
+                        },
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    // offsetX: -6,
+                    style: {
+                        fontSize: '10px',
+                        colors: ['#fff']
+                    }
+                },
+                // stroke: {
+                //     show: true,
+                //     width: 1,
+                //     colors: ['#fff']
+                // },
+                tooltip: {
+                    shared: true,
+                    intersect: false
+                },
+                xaxis: {
+                    categories: catArray,
+                },
+            };
+    
+            var chart = new ApexCharts(document.querySelector("#responseTimeId"), options);
+            chart.render();
+            });
+        </script>
+        <script>
+            require(['svg', 'ApexCharts'], function (svg, ApexCharts) {
+                var sqlTimeArray1 = [];
+                var sqlTimeArray2 = [];
+                var catArray = [];
+                {% for item in data %}
+                    catArray.push('{{item[0]}}');
+                    {% if (item[1] == fb[0][1]) %}
+                        sqlTimeArray1.push({{item[3]}});
+                    {% else %}
+                        sqlTimeArray1.push(0);
+                    {% endif %}
+
+                    {% if (item[1] == sb[0][1]) %}
+                        sqlTimeArray1.push({{item[3]}});
+                    {% elif (item[4] == sb[0][1]) %}
+                        sqlTimeArray2.push({{item[6]}});
+                    {% else %}
+                        sqlTimeArray2.push(0);
+                    {% endif %}
+                {% endfor %}
+
+                var options = {
+                    series: [{
+                        name: 'EID: {{eid_one}} SQL Time',
+                        data: sqlTimeArray1
+                    },{
+                        name: 'EID: {{eid_two}} SQL Time',
+                        data: sqlTimeArray2
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 430
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            dataLabels: {
+                                position: 'top',
+                            },
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        // offsetX: -6,
+                        style: {
+                            fontSize: '10px',
+                            colors: ['#fff']
+                        }
+                    },
+                    // stroke: {
+                    //     show: true,
+                    //     width: 1,
+                    //     colors: ['#fff']
+                    // },
+                    tooltip: {
+                        shared: true,
+                        intersect: false
+                    },
+                    xaxis: {
+                        categories: catArray,
+                    },
+                };
+
+                var chart = new ApexCharts(document.querySelector("#sqlId"), options);
+                chart.render();
+            });
+        </script>
         <script>
             var submitButton = document.getElementById("submit");
             var textField = document.getElementById("eid_one");
