@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link href="https://png.icons8.com/windows/50/000000/bot.png" rel="shortcut icon" type="image/x-icon" />
-    <title>RF Metrics</title>
+    <title>Export View</title>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -96,7 +96,7 @@
         <table class="table row-border tablecard" id="tm">
             <thead>
                 <tr>
-                    <th>Execution Info</th>
+                    <th>App Version</th>
                     <th>Table Name</th>
                     <th>Browser Time</th>
                     <th>Client Response Time</th>
@@ -131,13 +131,13 @@
         var fileTitle;
         switch(tabname) {
             case "#sm":
-                fileTitle = "SuiteMetrics";
+                fileTitle = "Suite";
                 break;
             case "#tm":
-                fileTitle =  "TestMetrics";
+                fileTitle =  "Test";
                 break;
             default:
-                fileTitle =  "metrics";
+                fileTitle =  "Default";
         }
 
         $(tabname).DataTable(
