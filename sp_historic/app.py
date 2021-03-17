@@ -94,6 +94,18 @@ def delete_eid(db, eid):
     mysql.connection.commit()
     return redirect(url_for('ehistoric', db = db))
 
+@app.route('/<db>/metrics/<eid>', methods=['GET'])
+def metrics(db, eid):
+    cursor = mysql.connection.cursor()
+    use_db(cursor, db)
+    # Get testcase results of execution id
+    cursor.execute("SELECT * from TB_TEST WHERE Execution_Id=%s;" % eid)
+    test_data = cursor.fetchall()
+    # get suite results of execution id
+    cursor.execute("SELECT * from TB_EXECUTION WHERE Execution_Id=%s;" % eid)
+    exe_data = cursor.fetchall()
+    return render_template('metrics.html', exe_data=exe_data, test_data=test_data)
+
 @app.route('/<db>/tmetrics', methods=['GET', 'POST'])
 def tmetrics(db):
     cursor = mysql.connection.cursor()
