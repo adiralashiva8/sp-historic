@@ -115,13 +115,15 @@
                                     <thead>
                                         <tr>
                                             <th rowspan="2" style="text-align:center">Table_Name</th>
-                                            <th colspan="3" style="text-align:center" title="Click to view {{eid_one}} execution info"><a href="./tmetrics/{{eid_one}}" target="_blank">EID {{eid_one}}</a></th>
-                                            <th colspan="3" style="text-align:center" title="Click to view {{eid_two}} execution info"><a href="./tmetrics/{{eid_two}}" target="_blank">EID {{eid_two}}</a></th>
+                                            <th colspan="4" style="text-align:center" title="Click to view {{eid_one}} execution info"><a href="./tmetrics/{{eid_one}}" target="_blank">EID {{eid_one}}</a></th>
+                                            <th colspan="4" style="text-align:center" title="Click to view {{eid_two}} execution info"><a href="./tmetrics/{{eid_two}}" target="_blank">EID {{eid_two}}</a></th>
                                         </tr>
                                         <tr>
+                                            <th>Client_Response_Time</th>
                                             <th>Response_Time</th>
                                             <th>Sql_Count</th>
                                             <th>Sql_Time</th>
+                                            <th>Client_Response_Time</th>
                                             <th>Response_Time</th>
                                             <th>Sql_Count</th>
                                             <th>Sql_Time</th>
@@ -135,7 +137,9 @@
                                                     <td style="text-align:center;"> {{item[2]}}</td>
                                                     <td style="text-align:center;"> {{item[3]}}</td>
                                                     <td style="text-align:center;"> {{item[4]}}</td>
+                                                    <td style="text-align:center;"> {{item[5]}}</td>
                                                 {% else %}
+                                                    <td style="text-align:center;"></td>
                                                     <td style="text-align:center;"></td>
                                                     <td style="text-align:center;"></td>
                                                     <td style="text-align:center;"></td>
@@ -145,11 +149,14 @@
                                                     <td style="text-align:center;"> {{item[2]}}</td>
                                                     <td style="text-align:center;"> {{item[3]}}</td>
                                                     <td style="text-align:center;"> {{item[4]}}</td>
+                                                    <td style="text-align:center;"> {{item[5]}}</td>
                                                 {% elif (item[5] == sb[0][1]) %}
                                                     <td style="text-align:center;"> {{item[6]}}</td>
                                                     <td style="text-align:center;"> {{item[7]}}</td>
                                                     <td style="text-align:center;"> {{item[8]}}</td>
+                                                    <td style="text-align:center;"> {{item[9]}}</td>
                                                 {% else %}
+                                                    <td style="text-align:center;"></td>
                                                     <td style="text-align:center;"></td>
                                                     <td style="text-align:center;"></td>
                                                     <td style="text-align:center;"></td>
