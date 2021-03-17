@@ -124,38 +124,57 @@
     </div>
     <script>
         require(['svg', 'ApexCharts'], function (svg, ApexCharts) {
-            var dataArray = [];
+            var respdataArray = [];
+            var sqldataArray = [];
             var catArray = [];
             {% for item in last_exe_data %}
-                catArray.push('{{item[2]}}')
-                dataArray.push({{item[4]}});
+                catArray.push('{{item[2]}}');
+                respdataArray.push({{item[4]}});
+                sqldataArray.push({{item[7]}});
             {% endfor %}
 
-            var options = {
-                series: [{
-                    name: "Desktops",
-                    data: dataArray
-                }],
-                chart: {
-                    height: 350,
-                    type: 'line',
-                    zoom: {
-                        enabled: false
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    curve: 'straight'
-                },
-                xaxis: {
-                    categories: catArray,
+        var options = {
+            series: [{
+                data: respdataArray
+            }, {
+                data: sqldataArray
+            }],
+            chart: {
+                type: 'bar',
+                height: 430
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    dataLabels: {
+                        position: 'top',
+                    },
                 }
-            };
+            },
+            dataLabels: {
+                enabled: true,
+                offsetX: -6,
+                style: {
+                    fontSize: '12px',
+                    colors: ['#fff']
+                }
+            },
+            stroke: {
+                show: true,
+                width: 1,
+                colors: ['#fff']
+            },
+            tooltip: {
+                shared: true,
+                intersect: false
+            },
+            xaxis: {
+                categories: catArray,
+            },
+        };
 
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
-            chart.render();
+        var chart = new ApexCharts(document.querySelector("#clientResponseTimeId"), options);
+        chart.render();
         });
     </script>
 </body>
