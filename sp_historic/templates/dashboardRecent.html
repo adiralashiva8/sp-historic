@@ -109,36 +109,27 @@
             require(['svg', 'ApexCharts'], function(svg, ApexCharts) {
                 var dataArray = [];
                 {% for item in last_exe_data %}
-                    dataArray.push('{{item[1]}}','{{item[3]}}');
+                    dataArray.push('{x: {{item[1]}}, y: {{item[3]}}},');
                 {% endfor %}
         
                 var options = {
                     series: [{
-                        name: 'Recent: {{exe_info[0][0]}}',
-                        data: [dataArray],
+                        data: [dataArray]
                     }],
                     chart: {
-                    height: 350,
-                    type: 'scatter',
+                        height: 350,
+                        type: 'line',
                         zoom: {
-                            enabled: true,
-                            type: 'xy'
+                            enabled: false
                         }
                     },
+                    
                     xaxis: {
-                        tickAmount: 10,
-                        labels: {
-                            formatter: function(val) {
-                                return parseFloat(val).toFixed(1)
-                            }
-                        }
-                    },
-                    yaxis: {
-                        tickAmount: 7
+                        type: 'category',
                     }
                 };
-        
-                var chart = new ApexCharts(document.querySelector("#clientResponseTimeId"), options);
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
                 chart.render();
             });
         </script>
