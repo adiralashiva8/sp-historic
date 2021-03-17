@@ -210,13 +210,13 @@ def dashboardRecent(db):
         cursor.execute("SELECT * from TB_TEST WHERE Execution_Id=%s;" % exe_info[0][0])
         last_exe_data = cursor.fetchall()
 
-        cursor.execute("SELECT Client_Response_Time from TB_TEST WHERE Execution_Id=%s order by Client_Response_Time desc LIMIT 5;" % exe_info[0][0])
+        cursor.execute("SELECT Table_Name, Client_Response_Time from TB_TEST WHERE Execution_Id=%s order by Client_Response_Time desc LIMIT 5;" % exe_info[0][0])
         crt_data = cursor.fetchall()
 
-        cursor.execute("SELECT Response_Time from TB_TEST WHERE Execution_Id=%s order by Response_Time desc LIMIT 5;" % exe_info[0][0])
+        cursor.execute("SELECT Table_Name, Response_Time from TB_TEST WHERE Execution_Id=%s order by Response_Time desc LIMIT 5;" % exe_info[0][0])
         rt_data = cursor.fetchall()
 
-        cursor.execute("SELECT Sql_Time from TB_TEST WHERE Execution_Id=%s order by Sql_Time desc LIMIT 5;" % exe_info[0][0])
+        cursor.execute("SELECT Table_Name, Sql_Time from TB_TEST WHERE Execution_Id=%s order by Sql_Time desc LIMIT 5;" % exe_info[0][0])
         sqlt_data = cursor.fetchall()
 
         return render_template('dashboardRecent.html', last_exe_data=last_exe_data, exe_info=exe_info, db_name=db,
