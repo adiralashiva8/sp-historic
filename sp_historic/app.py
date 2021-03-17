@@ -264,7 +264,7 @@ def dashboardRecentTwo(db):
             exe_info = cursor.fetchall()
 
             if len(exe_info) >= 2:
-                pass
+                exe_info = (exe_info[0][0], exe_info[1][0])
             else:
                 exe_info = (exe_info[0][0], exe_info[0][0])
 
