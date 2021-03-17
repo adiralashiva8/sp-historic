@@ -35,7 +35,7 @@ def sphistoric_parser(opts):
     for line in table.to_csv(header=False, index=True).split('\n'):
         if line:
             values = line.split(',')
-            insert_into_test_table(mydb, result_id, str(values[0]), str(values[2]), str(values[3]), str(values[4]), str(values[5]), str(values[6]))
+            insert_into_test_table(mydb, result_id, str(values[0]), float(values[2]), float(values[3]), float(values[4]), float(values[5]), float(values[6]))
 
     print("INFO: Writing execution results to dB")
     commit_and_close_db(mydb)
