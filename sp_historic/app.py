@@ -55,7 +55,7 @@ def add_db():
             # create tables in created database
             use_db(cursor, db_name)
             cursor.execute("Create table TB_EXECUTION ( Execution_Id INT NOT NULL auto_increment primary key, Execution_Date DATETIME, Execution_Desc TEXT);")
-            cursor.execute("Create table TB_TEST ( Test_Id INT NOT NULL auto_increment primary key, Execution_Id INT, Table_Name TEXT, Browser_Time TEXT, Client_Response_Time TEXT, Response_Time TEXT, Sql_Count TEXT, Sql_Time TEXT);")
+            cursor.execute("Create table TB_TEST ( Test_Id INT NOT NULL auto_increment primary key, Execution_Id INT, Table_Name TEXT, Browser_Time FLOAT, Client_Response_Time FLOAT, Response_Time FLOAT, Sql_Count FLOAT, Sql_Time FLOAT);")
             mysql.connection.commit()
         except Exception as e:
             print(str(e))
