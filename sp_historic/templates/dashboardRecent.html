@@ -127,7 +127,7 @@
             var dataArray = [];
             var catArray = [];
             {% for item in last_exe_data %}
-                catArray.push({{item[2]}})
+                catArray.push('{{item[2]}}')
                 dataArray.push({{item[4]}});
             {% endfor %}
 
