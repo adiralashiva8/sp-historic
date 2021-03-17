@@ -213,14 +213,20 @@ def dashboardRecent(db):
         cursor.execute("SELECT Table_Name, Client_Response_Time from TB_TEST WHERE Execution_Id=%s order by Client_Response_Time desc LIMIT 5;" % exe_info[0])
         crt_data = cursor.fetchall()
 
-        cursor.execute("SELECT Table_Name, Response_Time from TB_TEST WHERE Execution_Id=%s order by Response_Time desc LIMIT 5;" % exe_info[0])
-        rt_data = cursor.fetchall()
-
         cursor.execute("SELECT Table_Name, Sql_Time from TB_TEST WHERE Execution_Id=%s order by Sql_Time desc LIMIT 5;" % exe_info[0])
         sqlt_data = cursor.fetchall()
 
+        cursor.execute("SELECT COUNT(Table_Name) from TB_TEST WHERE Execution_Id=%s" % exe_info[0])
+        tables_data = cursor.fetchall()
+
+        cursor.execute("SELECT SUM(Client_Response_Time) from TB_TEST WHERE Execution_Id=%s" % exe_info[0])
+        scrt_data = cursor.fetchall()
+
+        cursor.execute("SELECT SUM(Sql_Time) from TB_TEST WHERE Execution_Id=%s" % exe_info[0])
+        ssqlt_data = cursor.fetchall()
+
         return render_template('dashboardRecent.html', last_exe_data=last_exe_data, exe_info=exe_info, db_name=db,
-         crt_data=crt_data, rt_data=rt_data, sqlt_data=sqlt_data)    
+         crt_data=crt_data, tables_data=tables_data, sqlt_data=sqlt_data, scrt_data=scrt_data, ssqlt_data=ssqlt_data)    
     else:
         return redirect(url_for('redirect_url'))
 

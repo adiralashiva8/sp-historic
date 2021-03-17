@@ -118,26 +118,6 @@
                         <div class="col-lg-6 col-xl-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Top 5: Response Time</h3>
-                                    <div class="card-options">
-                                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                                    </div>
-                                </div>
-                                <table class="table card-table">
-                                    <tbody>                                            
-                                        {% for item in rt_data %}
-                                            <tr>
-                                                <td> {{item[0]}}</td>
-                                                <td class="text-right"><span class="text-muted"> {{item[1]}}</span></td>
-                                            </tr>
-                                        {% endfor %}                                   
-                                    </tbody>
-                                </table>
-                            </div>    
-                        </div>
-                        <div class="col-lg-6 col-xl-4">
-                            <div class="card">
-                                <div class="card-header">
                                     <h3 class="card-title">Top 5: SQL Time</h3>
                                     <div class="card-options">
                                         <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
@@ -151,6 +131,35 @@
                                                 <td class="text-right"><span class="text-muted"> {{item[1]}}</span></td>
                                             </tr>
                                         {% endfor %}                                    
+                                    </tbody>
+                                </table>
+                            </div>    
+                        </div>
+                        <div class="col-lg-6 col-xl-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Other Statistics</h3>
+                                    <div class="card-options">
+                                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                    </div>
+                                </div>
+                                <table class="table card-table">
+                                    <tbody>
+                                        <tr>
+                                            <td><i class="fa fa-list-alt text-muted"></i></td>
+                                            <td>Total Tables</td>
+                                            <td class="text-right"><span class="text-muted">{{tables_data[0][0]}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-chrome text-muted"></i></td>
+                                            <td title="Sum of client response time">Sum of Client Response Time</td>
+                                            <td class="text-right"><span class="text-muted">{{scrt_data[0][0]}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-database text-muted"></i></td>
+                                            <td title="Sum of sql time">Sum of SQL Time</td>
+                                            <td class="text-right"><span class="text-muted">{{ssqlt_data[0][0]}}</span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>    
