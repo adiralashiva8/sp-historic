@@ -262,6 +262,12 @@ def dashboardRecentTwo(db):
         else:
             cursor.execute("SELECT Execution_Id from TB_EXECUTION order by Execution_Id desc LIMIT 2;")
             exe_info = cursor.fetchall()
+
+            if len(exe_info) == 1:
+                pass
+            else:
+                exe_info = (exe_info[0][0], exe_info[0][1])
+
             eid_one = exe_info[0]
             eid_two = exe_info[1]
             # fetch first eid tets results
