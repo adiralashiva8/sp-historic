@@ -113,7 +113,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div id="responseTimeId" style="height: 16rem;"></div>
+                                    <div id="responseTimeId" style="height: auto;"></div>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div id="sqlId" style="height: 16rem;"></div>
+                                    <div id="sqlId" style="height: auto;"></div>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +164,15 @@
             }],
             chart: {
                 type: 'bar',
-                height: 430
+                height: 430,
+                zoom: {
+                    type: 'x',
+                    enabled: true,
+                    autoScaleYaxis: true
+                },
+                toolbar: {
+                    autoSelected: 'zoom'
+                }
             },
             plotOptions: {
                 bar: {
@@ -179,13 +187,12 @@
                 offsetX: -6,
                 style: {
                     fontSize: '12px',
-                    colors: ['#fff']
                 }
             },
             stroke: {
                 show: true,
                 width: 1,
-                colors: ['#fff']
+                colors: ['Black']
             },
             tooltip: {
                 shared: true,
@@ -216,11 +223,19 @@
             }],
             chart: {
                 type: 'bar',
-                height: 430
+                height: 430,
+                zoom: {
+                    type: 'x',
+                    enabled: true,
+                    autoScaleYaxis: true
+                },
+                toolbar: {
+                    autoSelected: 'zoom'
+                }
             },
             plotOptions: {
                 bar: {
-                    horizontal: true,
+                    horizontal: false,
                     dataLabels: {
                         position: 'top',
                     },
@@ -231,7 +246,7 @@
                 offsetX: -6,
                 style: {
                     fontSize: '12px',
-                    colors: ['#fff']
+                    colors: ['Black']
                 }
             },
             stroke: {
