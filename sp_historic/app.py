@@ -289,9 +289,10 @@ def dashboardRecentTwo(db):
                 sorted_data = sort_tests(data)
                 # print(sorted_data)
                 return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data,
-                 eid_one = eid_one, eid_two = eid_two, one_app_version_data=one_app_version_data, two_app_version_data=two_app_version_data, error_message="")
+                 eid_one = eid_one, eid_two = eid_two, one_app_version_data=one_app_version_data,
+                  two_app_version_data=two_app_version_data, error_message="", show_link=1)
             else:
-                return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID")    
+                return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID", show_link=0)    
         else:
             cursor.execute("SELECT Execution_Id from TB_EXECUTION order by Execution_Id desc LIMIT 2;")
             exe_info = cursor.fetchall()
@@ -324,9 +325,10 @@ def dashboardRecentTwo(db):
                 sorted_data = sort_tests(data)
                 # print(sorted_data)
                 return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data,
-                 eid_one = eid_one, eid_two = eid_two, one_app_version_data=one_app_version_data, two_app_version_data=two_app_version_data, error_message="")
+                 eid_one = eid_one, eid_two = eid_two, one_app_version_data=one_app_version_data,
+                  two_app_version_data=two_app_version_data, error_message="", , show_link=1)
             else:
-                return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID")
+                return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID", show_link=0)
 
     else:
         return redirect(url_for('redirect_url'))

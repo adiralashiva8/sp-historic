@@ -102,6 +102,11 @@
                                     <div class="col">
                                         <button class="btn btn-primary btn-block" id="submit" type="submit" disabled="disabled">Compare</button>
                                     </div>
+                                    <div class="col">
+                                        {% if (show_link != 0) %}
+                                            <a href="./cmetrics?eid_one={{eid_one}}&eid_two={{eid_two}}" target="_blank"> Export Comparison</a>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </form>
                         </div>
