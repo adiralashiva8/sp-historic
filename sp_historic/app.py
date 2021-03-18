@@ -225,8 +225,12 @@ def dashboardRecent(db):
         cursor.execute("SELECT ROUND(SUM(Sql_Time),2) from TB_TEST WHERE Execution_Id=%s" % exe_info[0])
         ssqlt_data = cursor.fetchall()
 
+        cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % exe_info[0])
+        desc_data = cursor.fetchall()
+        app_version_data=desc_data[0]
+
         return render_template('dashboardRecent.html', last_exe_data=last_exe_data, exe_info=exe_info, db_name=db,
-         crt_data=crt_data, tables_data=tables_data, sqlt_data=sqlt_data, scrt_data=scrt_data, ssqlt_data=ssqlt_data)    
+         crt_data=crt_data, tables_data=tables_data, sqlt_data=sqlt_data, scrt_data=scrt_data, ssqlt_data=ssqlt_data, app_version_data=app_version_data)    
     else:
         return redirect(url_for('redirect_url'))
 
@@ -251,12 +255,22 @@ def dashboardRecentTwo(db):
             # fetch second eid test results
             cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_two )
             second_data = cursor.fetchall()
+
+            cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_one)
+            desc_data = cursor.fetchall()
+            one_app_version_data=desc_data[0]
+
+            cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_two)
+            desc_data = cursor.fetchall()
+            two_app_version_data=desc_data[0]
+
             if first_data and second_data:
                 # combine both tuples
                 data = first_data + second_data
                 sorted_data = sort_tests(data)
                 # print(sorted_data)
-                return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data, eid_one = eid_one, eid_two = eid_two, error_message="")
+                return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data,
+                 eid_one = eid_one, eid_two = eid_two, one_app_version_data=one_app_version_data, two_app_version_data=two_app_version_data, error_message="")
             else:
                 return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID")    
         else:
@@ -276,12 +290,22 @@ def dashboardRecentTwo(db):
             # fetch second eid test results
             cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_two )
             second_data = cursor.fetchall()
+
+            cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_one)
+            desc_data = cursor.fetchall()
+            one_app_version_data=desc_data[0]
+
+            cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_two)
+            desc_data = cursor.fetchall()
+            two_app_version_data=desc_data[0]
+
             if first_data and second_data:
                 # combine both tuples
                 data = first_data + second_data
                 sorted_data = sort_tests(data)
                 # print(sorted_data)
-                return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data, eid_one = eid_one, eid_two = eid_two, error_message="")
+                return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data,
+                 eid_one = eid_one, eid_two = eid_two, one_app_version_data=one_app_version_data, two_app_version_data=two_app_version_data, error_message="")
             else:
                 return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID")
 

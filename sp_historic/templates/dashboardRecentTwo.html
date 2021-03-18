@@ -166,11 +166,11 @@
     
             var options = {
                 series: [{
-                    name: 'EID: {{eid_one}} Client Response Time',
-                    data: clientResponseTimeArray1
-                }, {
-                    name: 'EID: {{eid_two}} Client Response Time',
+                    name: 'EID:#{{eid_two}} - {{two_app_version_data}}',
                     data: clientResponseTimeArray2
+                }, {
+                    name: 'EID:#{{eid_one}} - {{one_app_version_data}}',
+                    data: clientResponseTimeArray1
                 }],
                 chart: {
                     type: 'bar',
@@ -234,11 +234,11 @@
 
                 var options = {
                     series: [{
-                        name: 'EID: {{eid_one}} SQL Time',
-                        data: sqlTimeArray1
-                    },{
-                        name: 'EID: {{eid_two}} SQL Time',
+                        name: 'EID:#{{eid_two}} - {{two_app_version_data}}',
                         data: sqlTimeArray2
+                    },{
+                        name: 'EID:#{{eid_one}} - {{one_app_version_data}}',
+                        data: sqlTimeArray1
                     }],
                     chart: {
                         type: 'bar',

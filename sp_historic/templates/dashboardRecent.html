@@ -169,7 +169,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Response Graph - Browser, Client and Response Time(ms)</h3>
+                                    <h3 class="card-title">Client Response Time(ms)</h3>
                                     <div class="card-options">
                                         <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
                                                 class="fe fe-chevron-up"></i></a>
@@ -185,7 +185,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">SQL Time</h3>
+                                    <h3 class="card-title">SQL Time(ms)</h3>
                                     <div class="card-options">
                                         <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
                                                 class="fe fe-chevron-up"></i></a>
@@ -203,27 +203,17 @@
     </div>
     <script>
         require(['svg', 'ApexCharts'], function (svg, ApexCharts) {
-            var browserResponseTimeArray = [];
             var clientResponseTimeArray = [];
-            var responseTimeArray = [];
             var catArray = [];
             {% for item in last_exe_data %}
                 catArray.push('{{item[2]}}');
-                browserResponseTimeArray.push({{item[3]}});
                 clientResponseTimeArray.push({{item[4]}});
-                responseTimeArray.push({{item[5]}});
             {% endfor %}
 
         var options = {
             series: [{
-                name: 'Browser Response Time',
-                data: browserResponseTimeArray
-            }, {
-                name: 'Client Response Time',
+                name: '{{app_version_data}}',
                 data: clientResponseTimeArray
-            },{
-                name: 'Response Time',
-                data: responseTimeArray
             }],
             chart: {
                 type: 'bar',
@@ -274,7 +264,7 @@
 
         var options = {
             series: [{
-                name: 'SQL Time',
+                name: '{{app_version_data}}',
                 data: sqlTimeArray
             }],
             chart: {
