@@ -326,7 +326,7 @@ def dashboardRecentTwo(db):
                 # print(sorted_data)
                 return render_template('dashboardRecentTwo.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data,
                  eid_one = eid_one, eid_two = eid_two, one_app_version_data=one_app_version_data,
-                  two_app_version_data=two_app_version_data, error_message="", , show_link=1)
+                  two_app_version_data=two_app_version_data, error_message="", show_link=1)
             else:
                 return render_template('dashboardRecentTwo.html', db_name=db, error_message="EID not found, try with existing EID", show_link=0)
 
