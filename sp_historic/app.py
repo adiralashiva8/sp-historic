@@ -106,7 +106,7 @@ def metrics(db, eid):
     exe_data = cursor.fetchall()
     return render_template('metrics.html', exe_data=exe_data, test_data=test_data)
 
-@app.route('/<db>/metrics/<eid_one>/<eid_two>', methods=['GET'])
+@app.route('/<db>/cmetrics/<eid_one>/<eid_two>', methods=['GET'])
 def cmetrics(db, eid_one, eid_two):
     cursor = mysql.connection.cursor()
     use_db(cursor, db)
@@ -118,7 +118,7 @@ def cmetrics(db, eid_one, eid_two):
     # get suite results of execution id
     cursor.execute("SELECT * from TB_EXECUTION WHERE Execution_Id=%s;" % eid)
     exe_data = cursor.fetchall()
-    return render_template('metrics.html', exe_data=exe_data, test_data_1=test_data_1, test_data_2=test_data_2)
+    return render_template('cmetrics.html', exe_data=exe_data, test_data_1=test_data_1, test_data_2=test_data_2)
 
 @app.route('/<db>/tmetrics', methods=['GET', 'POST'])
 def tmetrics(db):
@@ -203,11 +203,12 @@ def mcompare(db):
             # combine both tuples
             data = first_data + second_data
             sorted_data = sort_tests(data)
-            return render_template('mcompare.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data, eid_one = eid_one, eid_two = eid_two, error_message="")
+            return render_template('mcompare.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data,
+             eid_one = eid_one, eid_two = eid_two, error_message="", show_link=1)
         else:
-            return render_template('mcompare.html', db_name=db, error_message="EID not found, try with existing EID")    
+            return render_template('mcompare.html', db_name=db, error_message="EID not found, try with existing EID", show_link=0)    
     else:
-        return render_template('mcompare.html', db_name=db, error_message="")
+        return render_template('mcompare.html', db_name=db, error_message="", show_link=0)
 
 @app.route('/<db>/query', methods=['GET', 'POST'])
 def query(db):
