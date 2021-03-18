@@ -227,7 +227,7 @@ def dashboardRecent(db):
 
         cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % exe_info[0])
         desc_data = cursor.fetchall()
-        app_version_data=desc_data[0]
+        app_version_data=desc_data[0][0]
 
         return render_template('dashboardRecent.html', last_exe_data=last_exe_data, exe_info=exe_info, db_name=db,
          crt_data=crt_data, tables_data=tables_data, sqlt_data=sqlt_data, scrt_data=scrt_data, ssqlt_data=ssqlt_data, app_version_data=app_version_data)    
