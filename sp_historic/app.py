@@ -106,6 +106,20 @@ def metrics(db, eid):
     exe_data = cursor.fetchall()
     return render_template('metrics.html', exe_data=exe_data, test_data=test_data)
 
+@app.route('/<db>/metrics/<eid_one>/<eid_two>', methods=['GET'])
+def cmetrics(db, eid_one, eid_two):
+    cursor = mysql.connection.cursor()
+    use_db(cursor, db)
+    # Get testcase results of execution id
+    cursor.execute("SELECT * from TB_TEST WHERE Execution_Id=%s;" % eid_one)
+    test_data_1 = cursor.fetchall()
+    cursor.execute("SELECT * from TB_TEST WHERE Execution_Id=%s;" % eid_two)
+    test_data_2 = cursor.fetchall()
+    # get suite results of execution id
+    cursor.execute("SELECT * from TB_EXECUTION WHERE Execution_Id=%s;" % eid)
+    exe_data = cursor.fetchall()
+    return render_template('metrics.html', exe_data=exe_data, test_data_1=test_data_1, test_data_2=test_data_2)
+
 @app.route('/<db>/tmetrics', methods=['GET', 'POST'])
 def tmetrics(db):
     cursor = mysql.connection.cursor()
@@ -170,6 +184,30 @@ def compare(db):
             return render_template('compare.html', db_name=db, error_message="EID not found, try with existing EID")    
     else:
         return render_template('compare.html', db_name=db, error_message="")
+
+@app.route('/<db>/mcompare', methods=['GET', 'POST'])
+def mcompare(db):
+    if request.method == "POST":
+        eid_one = request.form['eid_one']
+        eid_two = request.form['eid_two']
+        cursor = mysql.connection.cursor()
+        use_db(cursor, db)
+        # fetch first eid tets results
+        cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_one )
+        first_data = cursor.fetchall()
+        # fetch second eid test results
+        cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_two )
+        second_data = cursor.fetchall()
+
+        if first_data and second_data:
+            # combine both tuples
+            data = first_data + second_data
+            sorted_data = sort_tests(data)
+            return render_template('mcompare.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data, eid_one = eid_one, eid_two = eid_two, error_message="")
+        else:
+            return render_template('mcompare.html', db_name=db, error_message="EID not found, try with existing EID")    
+    else:
+        return render_template('mcompare.html', db_name=db, error_message="")
 
 @app.route('/<db>/query', methods=['GET', 'POST'])
 def query(db):

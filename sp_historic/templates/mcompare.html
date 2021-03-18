@@ -13,7 +13,7 @@
         <meta name="HandheldFriendly" content="True" />
         <meta name="MobileOptimized" content="320" />
         <link href="https://img.icons8.com/cotton/64/000000/time-machine.png" rel="shortcut icon" type="image/x-icon"/>
-        <title>SP Historic - Execution Result</title>
+        <title>SP Historic - Compare</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext" />
         <script src="/assets/js/require.min.js"></script>
@@ -57,18 +57,17 @@
                                         <a href="./ehistoric" class="nav-link"><i class="fa fa-calendar" style="color: CORNFLOWERBLUE;"></i> Historic</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="./tmetrics" class="nav-link active"><i class="fa fa-flask" style="color: PALEVIOLETRED;"></i> Recent</a>
-                                    </li>
-                                    
+                                        <a href="./tmetrics" class="nav-link"><i class="fa fa-flask" style="color: PALEVIOLETRED;"></i> Recent</a>
+                                    </li>                                    
                                     <li class="nav-item">
                                         <a href="./search" class="nav-link"><i class="fa fa-search" style="color: CHOCOLATE;"></i> Search</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="./compare" class="nav-link"><i class="fa fa-sliders" style="color: teal;"></i> Compare</a>
+                                        <a href="./compare" class="nav-link active"><i class="fa fa-sliders" style="color: teal;"></i> Compare</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"> <i class="fa fa-thumb-tack" style="color: CADETBLUE;"></i> Other<i class="fe fe-chevron-down"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-arrow">
+                                        <div class="dropdown-menu dropdown-menu-arrow">                                            
                                             <a href="./query" class="dropdown-item" style="color:blue">Query - &beta;</a>
                                             <a href="./mcompare.html" class="dropdown-item" style="color:blue">Export Data</a>
                                         </div>
@@ -80,48 +79,72 @@
                 </div>
                 <div class="my-3 my-md-5">
                     <div class="col-12">
-                        <div class="card">
-                            <div class="table-responsive">
-                                <table class="table card-table datatable">
-                                    <thead>
-                                        <tr>
-                                            <th>EID</th>
-                                            <th>Table Name</th>
-                                            <th>Browser Time</th>
-                                            <th>Client Response Time</th>
-                                            <th>Response Time</th>
-                                            <th>Sql Count</th>
-                                            <th>Sql Time</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for item in data %}
-                                            <tr>
-                                                <td> {{item[1]}}</td>
-                                                <td style="text-align:left;"> {{item[2]}}</td>
-                                                <td> {{item[3]}}</td>
-                                                <td> {{item[4]}}</td>
-                                                <td> {{item[5]}}</td>
-                                                <td> {{item[6]}}</td>
-                                                <td> {{item[7]}}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                <script>
-                                    require(["datatables", "jquery"], function (datatable, $) {
-                                        $(".datatable").DataTable({
-                                            stateSave: true,
-                                            "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                                            order: [[1, "asc"]],
-                                        });
-                                    });
-                                </script>
+                        {% if (error_message != "") %}
+                            <div class="alert alert-icon alert-danger" role="alert">
+                                <i class="fe fe-alert-triangle mr-2" aria-hidden="true"></i> {{error_message}}
                             </div>
+                        {% endif %}
+                        <form class="form-inline" method="post" action="">
+                            <div class="row row-sm align-items-center mb-3">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <span class="input-group-text">#</span>
+                                        <input type="text" class="form-control" placeholder="EID" id="eid_one" name="eid_one" onkeypress='validate(event)'>
+                                    </div>
+                                </div>
+                                <div class="col-auto">—</div>
+                                <div class="col">
+                                    <div class="input-group">
+                                        <span class="input-group-text">#</span>
+                                        <input type="text" class="form-control" placeholder="EID" id="eid_two" name="eid_two" onkeypress='validate(event)'>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-primary btn-block" id="submit" type="submit" disabled="disabled">Compare</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <a href="/download"> Download Excel</a>
+                            <a href="/cmetrics/{{eid_one}}/{{eid_two}}"> Compared Export View</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            var submitButton = document.getElementById("submit");
+            var textField = document.getElementById("eid_one");
+            var textField_two = document.getElementById("eid_two");
+    
+            textField.onkeyup = function () {
+                if (textField.value == "" & textField_two.value == "") {
+                    submitButton.disabled = true;
+                } else {
+                    submitButton.disabled = false;
+                }
+            }
+        </script>
+        <script>
+            function validate(evt) {
+                var theEvent = evt || window.event;
+    
+                // Handle paste
+                if (theEvent.type === 'paste') {
+                    key = event.clipboardData.getData('text/plain');
+                } else {
+                // Handle key press
+                    var key = theEvent.keyCode || theEvent.which;
+                    key = String.fromCharCode(key);
+                }
+                var regex = /[0-9]|\./;
+                if( !regex.test(key) ) {
+                    theEvent.returnValue = false;
+                    if(theEvent.preventDefault) theEvent.preventDefault();
+                }
+            }
+        </script>
     </body>
 </html>
