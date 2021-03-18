@@ -183,36 +183,12 @@ def compare(db):
             # combine both tuples
             data = first_data + second_data
             sorted_data = sort_tests(data)
-            return render_template('compare.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data, eid_one = eid_one, eid_two = eid_two, error_message="")
-        else:
-            return render_template('compare.html', db_name=db, error_message="EID not found, try with existing EID")    
-    else:
-        return render_template('compare.html', db_name=db, error_message="")
-
-@app.route('/<db>/mcompare', methods=['GET', 'POST'])
-def mcompare(db):
-    if request.method == "POST":
-        eid_one = request.form['eid_one']
-        eid_two = request.form['eid_two']
-        cursor = mysql.connection.cursor()
-        use_db(cursor, db)
-        # fetch first eid tets results
-        cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_one )
-        first_data = cursor.fetchall()
-        # fetch second eid test results
-        cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_two )
-        second_data = cursor.fetchall()
-
-        if first_data and second_data:
-            # combine both tuples
-            data = first_data + second_data
-            sorted_data = sort_tests(data)
-            return render_template('mcompare.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data,
+            return render_template('compare.html', data=sorted_data, db_name=db, fb = first_data, sb = second_data,
              eid_one = eid_one, eid_two = eid_two, error_message="", show_link=1)
         else:
-            return render_template('mcompare.html', db_name=db, error_message="EID not found, try with existing EID", show_link=0)    
+            return render_template('compare.html', db_name=db, error_message="EID not found, try with existing EID", show_link=0)    
     else:
-        return render_template('mcompare.html', db_name=db, error_message="", show_link=0)
+        return render_template('compare.html', db_name=db, error_message="", show_link=0)
 
 @app.route('/<db>/query', methods=['GET', 'POST'])
 def query(db):

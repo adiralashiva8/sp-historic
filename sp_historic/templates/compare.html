@@ -69,7 +69,6 @@
                                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"> <i class="fa fa-thumb-tack" style="color: CADETBLUE;"></i> Other<i class="fe fe-chevron-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-arrow">                                            
                                             <a href="./query" class="dropdown-item" style="color:blue">Query - &beta;</a>
-                                            <a href="./mcompare" class="dropdown-item" style="color:blue">Export Data</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -101,6 +100,11 @@
                                 </div>
                                 <div class="col">
                                     <button class="btn btn-primary btn-block" id="submit" type="submit" disabled="disabled">Compare</button>
+                                </div>
+                                <div class="col">
+                                    {% if (show_link != 0) %}
+                                        <a href="./cmetrics?eid_one={{eid_one}}&eid_two={{eid_two}}" target="_blank"> Export Comparison</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </form>
