@@ -106,10 +106,12 @@ def metrics(db, eid):
     exe_data = cursor.fetchall()
     return render_template('metrics.html', exe_data=exe_data, test_data=test_data)
 
-@app.route('/<db>/cmetrics/<eid_one>/<eid_two>', methods=['GET'])
-def cmetrics(db, eid_one, eid_two):
+@app.route('/<db>/cmetrics', methods=['GET'])
+def cmetrics(db):
     cursor = mysql.connection.cursor()
     use_db(cursor, db)
+    eid_one = request.args.get('eid_one')
+    eid_two = request.args.get('eid_two')
     # Get testcase results of execution id
     cursor.execute("SELECT * from TB_TEST WHERE Execution_Id=%s;" % eid_one)
     test_data_1 = cursor.fetchall()
