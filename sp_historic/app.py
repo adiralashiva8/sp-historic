@@ -156,10 +156,10 @@ def compare(db):
         cursor = mysql.connection.cursor()
         use_db(cursor, db)
         # fetch first eid tets results
-        cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Response_Time, Sql_Count, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_one )
+        cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_one )
         first_data = cursor.fetchall()
         # fetch second eid test results
-        cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Response_Time, Sql_Count, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_two )
+        cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_two )
         second_data = cursor.fetchall()
         if first_data and second_data:
             # combine both tuples
