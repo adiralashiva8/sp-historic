@@ -258,11 +258,11 @@ def dashboardRecentTwo(db):
 
             cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_one)
             desc_data = cursor.fetchall()
-            one_app_version_data=desc_data[0]
+            one_app_version_data=desc_data[0][0]
 
             cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_two)
             desc_data = cursor.fetchall()
-            two_app_version_data=desc_data[0]
+            two_app_version_data=desc_data[0][0]
 
             if first_data and second_data:
                 # combine both tuples
@@ -293,11 +293,11 @@ def dashboardRecentTwo(db):
 
             cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_one)
             desc_data = cursor.fetchall()
-            one_app_version_data=desc_data[0]
+            one_app_version_data=desc_data[0][0]
 
             cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_two)
             desc_data = cursor.fetchall()
-            two_app_version_data=desc_data[0]
+            two_app_version_data=desc_data[0][0]
 
             if first_data and second_data:
                 # combine both tuples
