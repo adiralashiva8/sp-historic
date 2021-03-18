@@ -122,7 +122,7 @@
     </div>
     <script>
         window.onload = function () {
-            executeDataTable('#tm', 2);
+            executeDataTable('#tm', 3);
         };
     </script>
 
@@ -130,11 +130,8 @@
     function executeDataTable(tabname,sortCol) {
         var fileTitle;
         switch(tabname) {
-            case "#sm":
-                fileTitle = "Suite";
-                break;
             case "#tm":
-                fileTitle =  "Test";
+                fileTitle =  "PerformanceReport";
                 break;
             default:
                 fileTitle =  "Default";
