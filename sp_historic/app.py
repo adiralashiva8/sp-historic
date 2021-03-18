@@ -118,9 +118,11 @@ def cmetrics(db):
     cursor.execute("SELECT * from TB_TEST WHERE Execution_Id=%s;" % eid_two)
     test_data_2 = cursor.fetchall()
     # get suite results of execution id
-    cursor.execute("SELECT * from TB_EXECUTION WHERE Execution_Id=%s;" % eid)
-    exe_data = cursor.fetchall()
-    return render_template('cmetrics.html', exe_data=exe_data, test_data_1=test_data_1, test_data_2=test_data_2)
+    cursor.execute("SELECT * from TB_EXECUTION WHERE Execution_Id=%s;" % eid_one)
+    exe_data_1 = cursor.fetchall()
+    cursor.execute("SELECT * from TB_EXECUTION WHERE Execution_Id=%s;" % eid_two)
+    exe_data_2 = cursor.fetchall()
+    return render_template('cmetrics.html', exe_data_1=exe_data_1, exe_data_2=exe_data_2, test_data_1=test_data_1, test_data_2=test_data_2)
 
 @app.route('/<db>/tmetrics', methods=['GET', 'POST'])
 def tmetrics(db):
