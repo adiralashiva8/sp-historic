@@ -18,13 +18,40 @@ def index():
 def redirect_url():
     return render_template('redirect.html')
 
-@app.route('/home', methods=['GET'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
-    cursor = mysql.connection.cursor()
-    use_db(cursor, "sphistoric")
-    cursor.execute("SELECT * FROM TB_PROJECT;")
-    data = cursor.fetchall()
-    return render_template('home.html', data=data)
+    if request.method == "POST":
+        search = request.form['search']
+        cursor = mysql.connection.cursor()
+        use_db(cursor, "sphistoric")
+        cursor.execute("SELECT * FROM TB_PROJECT WHERE Project_Name LIKE '{name}%';".format(name=search))
+        data = cursor.fetchall()
+        return render_template('home.html', data=data)
+    else:
+        cursor = mysql.connection.cursor()
+        use_db(cursor, "sphistoric")
+        cursor.execute("SELECT * FROM TB_PROJECT;")
+        data = cursor.fetchall()
+        return render_template('home.html', data=data)
+
+@app.route('/<db>/search', methods=['GET', 'POST'])
+def search(db):
+    if request.method == "POST":
+        search = request.form['search']
+        cursor = mysql.connection.cursor()
+        use_db(cursor, db)
+        try:
+            if search:
+                cursor.execute("SELECT * from TB_TEST WHERE Table_Name LIKE '%{name}%' OR Execution_Id LIKE '%{name}%' ORDER BY Execution_Id DESC LIMIT 500;".format(name=search))
+                data = cursor.fetchall()
+                return render_template('search.html', data=data, db_name=db, error_message="")
+            else:
+                return render_template('search.html', db_name=db, error_message="Search text should not be empty")
+        except Exception as e:
+            print(str(e))
+            return render_template('search.html', db_name=db, error_message="Could not perform search. Avoid single quote in search or use escaping character")
+    else:
+        return render_template('search.html', db_name=db, error_message="")
 
 @app.route('/<db>/deldbconf', methods=['GET'])
 def delete_db_conf(db):
@@ -244,9 +271,9 @@ def dashboardRecent(db):
         cursor.execute("SELECT ROUND(SUM(Sql_Time),2) from TB_TEST WHERE Execution_Id=%s" % exe_info[0])
         ssqlt_data = cursor.fetchall()
 
-        cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % exe_info[0])
+        cursor.execute("SELECT Execution_Desc, Execution_Data from TB_EXECUTION WHERE Execution_Id=%s;" % exe_info[0])
         desc_data = cursor.fetchall()
-        app_version_data=desc_data[0][0]
+        app_version_data=str(desc_data[0][0]) + "__" + str(desc_data[0][1])
 
         return render_template('dashboardRecent.html', last_exe_data=last_exe_data, exe_info=exe_info, db_name=db,
          crt_data=crt_data, tables_data=tables_data, sqlt_data=sqlt_data, scrt_data=scrt_data, ssqlt_data=ssqlt_data, app_version_data=app_version_data)    
@@ -275,13 +302,13 @@ def dashboardRecentTwo(db):
             cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_two )
             second_data = cursor.fetchall()
 
-            cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_one)
+            cursor.execute("SELECT Execution_Desc, Execution_Date from TB_EXECUTION WHERE Execution_Id=%s;" % eid_one)
             desc_data = cursor.fetchall()
-            one_app_version_data=desc_data[0][0]
+            one_app_version_data=str(desc_data[0][0]) + "__" + str(desc_data[0][1])
 
-            cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_two)
+            cursor.execute("SELECT Execution_Desc, Execution_Date from TB_EXECUTION WHERE Execution_Id=%s;" % eid_two)
             desc_data = cursor.fetchall()
-            two_app_version_data=desc_data[0][0]
+            two_app_version_data=str(desc_data[0][0]) + "__" + str(desc_data[0][1])
 
             if first_data and second_data:
                 # combine both tuples
@@ -311,13 +338,13 @@ def dashboardRecentTwo(db):
             cursor.execute("SELECT Table_Name, Execution_Id, Client_Response_Time, Sql_Time from TB_TEST WHERE Execution_Id=%s;" % eid_two )
             second_data = cursor.fetchall()
 
-            cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_one)
+            cursor.execute("SELECT Execution_Desc, Execution_Date from TB_EXECUTION WHERE Execution_Id=%s;" % eid_one)
             desc_data = cursor.fetchall()
-            one_app_version_data=desc_data[0][0]
+            one_app_version_data=str(desc_data[0][0]) + "__" + str(desc_data[0][1])
 
-            cursor.execute("SELECT Execution_Desc from TB_EXECUTION WHERE Execution_Id=%s;" % eid_two)
+            cursor.execute("SELECT Execution_Desc, Execution_Date from TB_EXECUTION WHERE Execution_Id=%s;" % eid_two)
             desc_data = cursor.fetchall()
-            two_app_version_data=desc_data[0][0]
+            two_app_version_data=str(desc_data[0][0]) + "__" + str(desc_data[0][1])
 
             if first_data and second_data:
                 # combine both tuples

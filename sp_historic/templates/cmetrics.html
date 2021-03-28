@@ -96,8 +96,7 @@
         <table class="table row-border tablecard" id="tm">
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>App Version</th>
+                    <th>App Version-Date</th>
                     <th>Table Name</th>
                     <th>Browser Time</th>
                     <th>Client Response Time</th>
@@ -109,8 +108,7 @@
             <tbody>
                 {% for item in test_data_1 %}
                 <tr>
-                    <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:left;">{{exe_data_1[0][1]}}</td>
-                    <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:left;">{{exe_data_1[0][2]}}</td>
+                    <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:left;">{{exe_data_1[0][2]}}__{{exe_data_1[0][1]}}</td>
                     <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:left;">{{item[2]}}</td>
                     <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:center;">{{item[3]}}</td>
                     <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:center;">{{item[4]}}</td>
@@ -121,8 +119,7 @@
                 {% endfor %}
                 {% for item in test_data_2 %}
                 <tr>
-                    <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:left;">{{exe_data_2[0][1]}}</td>
-                    <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:left;">{{exe_data_2[0][2]}}</td>
+                    <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:left;">{{exe_data_2[0][2]}}__{{exe_data_2[0][1]}}</td>
                     <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:left;">{{item[2]}}</td>
                     <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:center;">{{item[3]}}</td>
                     <td style="word-wrap: break-word;max-width: 250px; white-space: normal;text-align:center;">{{item[4]}}</td>
@@ -136,7 +133,7 @@
     </div>
     <script>
         window.onload = function () {
-            executeDataTable('#tm', 2);
+            executeDataTable('#tm', 1);
         };
     </script>
 
