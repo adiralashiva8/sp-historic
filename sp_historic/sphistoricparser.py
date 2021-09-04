@@ -22,7 +22,7 @@ def sphistoric_parser(opts):
     rootdb = connect_to_mysql_db(opts.host, opts.username, opts.password, 'sphistoric')
 
     # insert test results info into db
-    df = pd.read_excel(opts.output)
+    df = pd.read_csv(opts.output)
     table = pd.pivot_table(df, index=["table","app_version"],
      values=["browser_time", "client_response_time", "response_time", "sql_count", "sql_time"])
     
